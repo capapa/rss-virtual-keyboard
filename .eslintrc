@@ -9,6 +9,14 @@
   ],
   "rules": {
     "quotes": ["error", "double"],
-    "linebreak-style": ["error", "windows"]
-  }
+    "linebreak-style": ["error",, "windows"],
+    "prettier/prettier": "error"
+  },
+  "parserOptions": {
+      "ecmaVersion": 11,
+      "sourceType": "module"
+  },
+  "plugins": [
+      "prettier"
+  ]
 }
