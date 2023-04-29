@@ -1,0 +1,30 @@
+{
+  "name": "virtual-keyboard",
+  "version": "1.0.0",
+  "description": "virtual-keyboard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --progress",
+    "start": "webpack-dev-server",
+    "lint": "eslint src"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.7.3",
+    "eslint": "^8.39.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-webpack-plugin": "^4.0.1",
+    "html-loader": "^4.2.0",
+    "html-webpack-plugin": "^5.5.1",
+    "sass": "^1.62.1",
+    "sass-loader": "^13.2.2",
+    "sass-resources-loader": "^2.2.5",
+    "style-loader": "^3.3.2",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2",
+    "webpack-dev-server": "^4.13.3"
+  }
+}
