@@ -15,6 +15,19 @@ const getNewContainer = (parent) => {
   const textarea = getNewElement(container, "textarea", "textarea");
   const keyboard = getNewElement(container, "div", "keyboard");
 
+  // create keys
+  dataKeys.forEach((rowDataKeys) => {
+    const divRow = getNewElement(keyboard, "div", "row");
+    rowDataKeys.forEach((keyData) => {
+      const item = getNewElement(
+        divRow,
+        "button",
+        keyData.className,
+        keyData.eng.caseDown
+      );
+    });
+  });
+
   getNewElement(
     container,
     "p",
