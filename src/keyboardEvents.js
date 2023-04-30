@@ -3,6 +3,8 @@ function keyboardEvents() {
   const langElem = container.querySelector(".lang");
   const textarea = container.querySelector(".textarea");
   const capslook = container.querySelector(".CapsLock");
+  const keyboard = container.querySelector(".keyboard");
+  const rows = keyboard.querySelectorAll(".row");
 
   let lang = langElem.dataset.lang;
   let caps = false;
@@ -15,6 +17,34 @@ function keyboardEvents() {
     }
     langElem.dataset.lang = lang;
     langElem.textContent = lang;
+  };
+
+  const setText = (addText) => {
+    let text = textarea.value;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    if (start !== end || end < text.length) {
+      text = text.slice(0, start) + addText + text.slice(end);
+    } else {
+      text += addText;
+    }
+    textarea.value = text;
+    textarea.setSelectionRange(start + addText.length, start + addText.length);
+  };
+
+  const togglePressed = (button, pressed) => {
+    const className = "pressed";
+    if (button) {
+      if (pressed) {
+        if (!button.classList.contains(className)) {
+          button.classList.add(className);
+        }
+      } else {
+        if (button.classList.contains(className)) {
+          button.classList.remove(className);
+        }
+      }
+    }
   };
 
   const getElementByClassName = (className) => {
@@ -35,24 +65,45 @@ function keyboardEvents() {
 
   const clickShift = () => {};
 
-  const clickTab = () => {};
+  const clickTab = () => {
+    setText("    ");
+  };
 
-  const clickEnter = () => {};
+  const clickEnter = () => {
+    setText("\n");
+  };
+
+  const deleteRangeText = () => {
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    let text = textarea.value;
+    if (start !== end) {
+      text = text.slice(0, start) + text.slice(end);
+      textarea.value = text;
+      textarea.setSelectionRange(start, start);
+      return true;
+    }
+    return false;
+  };
 
   const clickBackspace = () => {
-    const start = textarea.selectionStart - 1;
-    if (start < 0) return;
-    let text = textarea.value;
-    textarea.value = text.slice(0, start) + text.slice(start + 1);
-    textarea.setSelectionRange(start, start);
+    if (!deleteRangeText()) {
+      const start = textarea.selectionStart - 1;
+      if (start < 0) return;
+      let text = textarea.value;
+      textarea.value = text.slice(0, start) + text.slice(start + 1);
+      textarea.setSelectionRange(start, start);
+    }
   };
 
   const clickDelete = () => {
-    const start = textarea.selectionStart;
-    let text = textarea.value;
-    if (start > text.length) return;
-    textarea.value = text.slice(0, start) + text.slice(start + 1);
-    textarea.setSelectionRange(start, start);
+    if (!deleteRangeText()) {
+      const start = textarea.selectionStart;
+      let text = textarea.value;
+      if (start > text.length) return;
+      textarea.value = text.slice(0, start) + text.slice(start + 1);
+      textarea.setSelectionRange(start, start);
+    }
   };
 
   document.addEventListener("keydown", (e) => {
@@ -64,7 +115,9 @@ function keyboardEvents() {
         e.preventDefault();
 
         const key = button.textContent;
-        if (key === "Shift") {
+        if (["Alt", "Ctrl"].includes(key)) {
+        } else if (key === "Shift") {
+          shift = true;
           clickShift();
         } else if (key === "CapsLock") {
           clickCaps();
@@ -77,6 +130,7 @@ function keyboardEvents() {
         } else if (key === "Enter") {
           clickEnter();
         } else if (key) {
+          setText(key);
         }
       }
     }
