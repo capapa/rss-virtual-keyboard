@@ -1,3 +1,5 @@
+import dataKeys from "./dataKeys";
+
 function keyboardEvents() {
   const container = document.querySelector(".container");
   const langElem = container.querySelector(".lang");
@@ -8,6 +10,7 @@ function keyboardEvents() {
 
   let lang = langElem.dataset.lang;
   let caps = false;
+  let shift = false;
 
   const changeLang = () => {
     if (lang === "eng") {
@@ -17,6 +20,29 @@ function keyboardEvents() {
     }
     langElem.dataset.lang = lang;
     langElem.textContent = lang;
+    setKeys(lang, caps, shift);
+  };
+
+  const setKeys = (lang = "eng", caps = false, shift = false) => {
+    const shiftCaps = caps && shift;
+    let char;
+    for (let i = 0; i < dataKeys.length; i++) {
+      for (let j = 0; j < dataKeys[i].length; j++) {
+        const dataKey = dataKeys[i][j][lang];
+        if (shiftCaps && dataKey.shiftCaps) {
+          char = dataKey.shiftCaps;
+        } else if (caps && dataKey.caps) {
+          char = dataKey.caps;
+        } else if (!shiftCaps && (shift || caps)) {
+          char = dataKey.caseUp;
+        } else {
+          char = dataKey.caseDown;
+        }
+
+        // set text key button
+        rows[i].children[j].textContent = char;
+      }
+    }
   };
 
   const setText = (addText) => {
@@ -61,9 +87,12 @@ function keyboardEvents() {
       capslook.classList.add("pressed");
       caps = true;
     }
+    setKeys(lang, caps, shift);
   };
 
-  const clickShift = () => {};
+  const clickShift = () => {
+    setKeys(lang, caps, shift);
+  };
 
   const clickTab = () => {
     setText("    ");
@@ -137,6 +166,22 @@ function keyboardEvents() {
 
     textarea.focus();
   });
+
+  document.addEventListener("keyup", (e) => {
+    const button = getElementByClassName(e.code);
+    if (button) {
+      if (e.key !== "CapsLock") {
+        togglePressed(button, false);
+      }
+    }
+
+    if (e.key === "Shift") {
+      shift = false;
+      clickShift();
+    }
+  });
+
+  setKeys();
 }
 
 export default keyboardEvents;
