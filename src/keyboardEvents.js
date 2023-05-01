@@ -135,6 +135,45 @@ function keyboardEvents() {
     }
   };
 
+  const kmDown = (button) => {
+    const key = button.textContent;
+    if (key === "CapsLock") {
+      clickCaps();
+    } else {
+      togglePressed(button, true);
+
+      if (key === "Shift") {
+        shift = !shift;
+        clickShift();
+      } else if (key === "Tab") {
+        clickTab();
+      } else if (key === "Backspace") {
+        clickBackspace();
+      } else if (key === "Del") {
+        clickDelete();
+      } else if (key === "Enter") {
+        clickEnter();
+      } else if (!["Alt", "Ctrl"].includes(key)) {
+        setText(key);
+      }
+    }
+
+    textarea.focus();
+  };
+
+  keyboard.addEventListener("mousedown", (e) => {
+    kmDown(e.target);
+  });
+
+  keyboard.addEventListener("mouseup", (e) => {
+    if (e.target.textContent === "Shift") {
+      shift = !shift;
+      clickShift();
+    } else if (e.target.textContent !== "CapsLock") {
+      togglePressed(e.target, false);
+    }
+  });
+
   document.addEventListener("keydown", (e) => {
     if (e.altKey && e.ctrlKey) {
       changeLang();
@@ -142,6 +181,7 @@ function keyboardEvents() {
       const button = getElementByClassName(e.code);
       if (button) {
         e.preventDefault();
+        //kmDown(button);
 
         const key = button.textContent;
         if (["Alt", "Ctrl"].includes(key)) {
