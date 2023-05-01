@@ -1,5 +1,6 @@
 import dataKeys from "./dataKeys";
 import keyboardEvents from "./keyboardEvents";
+import "./style.scss";
 
 const getNewElement = (parent, tagName, className, innerHTML) => {
   const element = document.createElement(tagName);
@@ -22,7 +23,7 @@ const getNewContainer = (parent) => {
       const item = getNewElement(
         divRow,
         "button",
-        keyData.className,
+        "key " + keyData.className,
         keyData.eng.caseDown
       );
     });

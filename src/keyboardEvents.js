@@ -143,7 +143,7 @@ function keyboardEvents() {
       togglePressed(button, true);
 
       if (key === "Shift") {
-        shift = !shift;
+        shift = true;
         clickShift();
       } else if (key === "Tab") {
         clickTab();
@@ -162,29 +162,37 @@ function keyboardEvents() {
   };
 
   keyboard.addEventListener("mousedown", (e) => {
-    kmDown(e.target);
+    const button = e.target;
+    if (button.tagName === "BUTTON") {
+      kmDown(button);
+    }
   });
 
   keyboard.addEventListener("mouseup", (e) => {
-    if (e.target.textContent === "Shift") {
-      shift = !shift;
-      clickShift();
-    } else if (e.target.textContent !== "CapsLock") {
-      togglePressed(e.target, false);
+    const button = e.target;
+    if (button.textContent !== "CapsLock") {
+      togglePressed(button, false);
+      if (button.textContent === "Shift") {
+        shift = false;
+        clickShift();
+      }
     }
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.altKey && e.ctrlKey) {
-      changeLang();
-    } else {
-      const button = getElementByClassName(e.code);
-      if (button) {
-        e.preventDefault();
-        //kmDown(button);
+    const button = getElementByClassName(e.code);
+    if (button) {
+      e.preventDefault();
+      const key = button.textContent;
+      if (key === "CapsLock") {
+        clickCaps();
+      } else {
+        togglePressed(button, true);
 
-        const key = button.textContent;
         if (["Alt", "Ctrl"].includes(key)) {
+          if (e.altKey && e.ctrlKey) {
+            changeLang();
+          }
         } else if (key === "Shift") {
           shift = true;
           clickShift();
