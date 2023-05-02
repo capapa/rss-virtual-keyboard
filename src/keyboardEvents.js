@@ -12,6 +12,18 @@ function keyboardEvents() {
   let caps = false;
   let shift = false;
 
+  const setLocalStorage = () => {
+    localStorage.setItem("lang", lang);
+  };
+
+  const getLocalStorage = () => {
+    if (localStorage.getItem("lang") === "rus") {
+      lang = "rus";
+    } else {
+      lang = "eng";
+    }
+  };
+
   const changeLang = () => {
     if (lang === "eng") {
       lang = "rus";
@@ -21,6 +33,7 @@ function keyboardEvents() {
     langElem.dataset.lang = lang;
     langElem.textContent = lang;
     setKeys(lang, caps, shift);
+    setLocalStorage();
   };
 
   const setKeys = (lang = "eng", caps = false, shift = false) => {
@@ -231,6 +244,7 @@ function keyboardEvents() {
     }
   });
 
+  getLocalStorage();
   setKeys();
 }
 
