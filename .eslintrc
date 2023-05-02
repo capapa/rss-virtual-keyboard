@@ -1,0 +1,22 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb-base",
+    "eslint:recommended"
+  ],
+  "rules": {
+    "quotes": ["error", "double"],
+    "linebreak-style": ["error",, "windows"],
+    "prettier/prettier": "error"
+  },
+  "parserOptions": {
+      "ecmaVersion": 11,
+      "sourceType": "module"
+  },
+  "plugins": [
+      "prettier"
+  ]
+}
