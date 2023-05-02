@@ -3,14 +3,6 @@ import KeyboardEvents from "./keyboardEvents";
 import "./style.scss";
 
 class Keyboard {
-  getNewElement = (parent, tagName, className, innerHTML) => {
-    const element = document.createElement(tagName);
-    element.className = className;
-    if (innerHTML) element.innerHTML = innerHTML;
-    parent.append(element);
-    return element;
-  };
-
   constructor() {
     const container = this.getNewElement(document.body, "div", "container");
     const title = this.getNewElement(
@@ -49,13 +41,19 @@ class Keyboard {
       "Для переключения языка комбинация: левыe ctrl + alt"
     );
 
-    // language
     const lang = this.getNewElement(container, "p", "lang", "eng");
-    lang.dataset.lang = "eng";
 
     textarea.setAttribute("autofocus", "");
 
     new KeyboardEvents();
   }
+
+  getNewElement = (parent, tagName, className, innerHTML) => {
+    const element = document.createElement(tagName);
+    element.className = className;
+    if (innerHTML) element.innerHTML = innerHTML;
+    parent.append(element);
+    return element;
+  };
 }
 new Keyboard();
