@@ -254,7 +254,7 @@ class KeyboardEvents {
 
     getLocalStorage();
     setLang();
-    setKeys();
+    //setKeys();
   }
 }
 export default KeyboardEvents;
