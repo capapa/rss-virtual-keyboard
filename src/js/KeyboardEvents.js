@@ -1,6 +1,6 @@
 import dataKeys from "./dataKeys";
 
-class KeyboardEvents {
+export default class KeyboardEvents {
   constructor() {
     const container = document.querySelector(".container");
     this.langElem = container.querySelector(".lang");
@@ -19,6 +19,7 @@ class KeyboardEvents {
       const button = e.target;
       if (button.tagName === "BUTTON") {
         this.kmDown(button);
+        this.textarea.focus();
       }
     });
 
@@ -232,8 +233,5 @@ class KeyboardEvents {
         this.setText(key);
       }
     }
-
-    this.textarea.focus();
   };
 }
-export default KeyboardEvents;
