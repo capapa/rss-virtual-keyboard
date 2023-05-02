@@ -30,6 +30,10 @@ function keyboardEvents() {
     } else {
       lang = "eng";
     }
+    setLang();
+  };
+
+  const setLang = () => {
     langElem.dataset.lang = lang;
     langElem.textContent = lang;
     setKeys(lang, caps, shift);
@@ -245,6 +249,7 @@ function keyboardEvents() {
   });
 
   getLocalStorage();
+  setLang();
   setKeys();
 }
 
