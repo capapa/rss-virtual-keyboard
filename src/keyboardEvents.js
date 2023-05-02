@@ -145,6 +145,7 @@ function keyboardEvents() {
       if (key === "Shift") {
         shift = true;
         clickShift();
+      } else if (key === "Win") {
       } else if (key === "Tab") {
         clickTab();
       } else if (key === "Backspace") {
@@ -193,6 +194,7 @@ function keyboardEvents() {
           if (e.altKey && e.ctrlKey) {
             changeLang();
           }
+        } else if (key === "Win") {
         } else if (key === "Shift") {
           shift = true;
           clickShift();
@@ -202,7 +204,7 @@ function keyboardEvents() {
           clickTab();
         } else if (key === "Backspace") {
           clickBackspace();
-        } else if (key === "Delete") {
+        } else if (key === "Del") {
           clickDelete();
         } else if (key === "Enter") {
           clickEnter();
