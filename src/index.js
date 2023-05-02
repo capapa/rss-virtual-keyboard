@@ -1,54 +1,61 @@
 import dataKeys from "./dataKeys";
-import keyboardEvents from "./keyboardEvents";
+import KeyboardEvents from "./keyboardEvents";
 import "./style.scss";
 
-const getNewElement = (parent, tagName, className, innerHTML) => {
-  const element = document.createElement(tagName);
-  element.className = className;
-  if (innerHTML) element.innerHTML = innerHTML;
-  parent.append(element);
-  return element;
-};
+class Keyboard {
+  getNewElement = (parent, tagName, className, innerHTML) => {
+    const element = document.createElement(tagName);
+    element.className = className;
+    if (innerHTML) element.innerHTML = innerHTML;
+    parent.append(element);
+    return element;
+  };
 
-const getNewContainer = (parent) => {
-  const container = getNewElement(parent, "div", "container");
-  const title = getNewElement(container, "h1", "title", "RSS Virtual Keyboard");
-  const textarea = getNewElement(container, "textarea", "textarea");
-  const keyboard = getNewElement(container, "div", "keyboard");
+  constructor() {
+    const container = this.getNewElement(document.body, "div", "container");
+    const title = this.getNewElement(
+      container,
+      "h1",
+      "title",
+      "RSS Virtual Keyboard"
+    );
+    const textarea = this.getNewElement(container, "textarea", "textarea");
+    const keyboard = this.getNewElement(container, "div", "keyboard");
 
-  // create keys
-  dataKeys.forEach((rowDataKeys) => {
-    const divRow = getNewElement(keyboard, "div", "row");
-    rowDataKeys.forEach((keyData) => {
-      const item = getNewElement(
-        divRow,
-        "button",
-        "key " + keyData.className,
-        keyData.eng.caseDown
-      );
+    // create keys
+    dataKeys.forEach((rowDataKeys) => {
+      const divRow = this.getNewElement(keyboard, "div", "row");
+      rowDataKeys.forEach((keyData) => {
+        const item = this.getNewElement(
+          divRow,
+          "button",
+          "key " + keyData.className,
+          keyData.eng.caseDown
+        );
+      });
     });
-  });
 
-  getNewElement(
-    container,
-    "p",
-    "description",
-    "Клавиатура создана в операционной системе Windows"
-  );
+    this.getNewElement(
+      container,
+      "p",
+      "description",
+      "Клавиатура создана в операционной системе Windows"
+    );
 
-  getNewElement(
-    container,
-    "p",
-    "language",
-    "Для переключения языка комбинация: левыe ctrl + alt"
-  );
+    this.getNewElement(
+      container,
+      "p",
+      "language",
+      "Для переключения языка комбинация: левыe ctrl + alt"
+    );
 
-  // language
-  const lang = getNewElement(container, "p", "lang", "eng");
-  lang.dataset.lang = "eng";
+    // language
+    const lang = this.getNewElement(container, "p", "lang", "eng");
+    lang.dataset.lang = "eng";
 
-  textarea.setAttribute("autofocus", "");
-};
+    textarea.setAttribute("autofocus", "");
 
-getNewContainer(document.body);
-keyboardEvents();
+    new KeyboardEvents();
+  }
+}
+new Keyboard();
