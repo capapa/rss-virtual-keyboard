@@ -53,7 +53,7 @@
       color: #ffffff;
       background: $fontColor;
       border-radius: 3px;
-      transition: background-color 0.3s;
+      transition: 0.3s;
       cursor: pointer;
       
       &:hover {
@@ -61,6 +61,7 @@
       }
 
       &.pressed {
+        border-radius: 15px;
         color: #000000;
         background: $orange;
       }
